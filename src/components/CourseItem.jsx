@@ -14,7 +14,9 @@ export default function CourseItem({ course, onDelete, onToggle }) {
           <div className={`course-title ${course.completed ? "done" : ""}`}>
             {course.name}
           </div>
-          <div className="course-id">Course #{course.id}</div>
+          <div className="course-id">
+            Course #{course.id} · {course.completed ? "완료" : "진행 중"}
+          </div>
         </div>
       </div>
       <div className="category-cell">

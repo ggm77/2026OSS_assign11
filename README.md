@@ -75,6 +75,14 @@ const doneCount = courses.filter(course => course.completed).length;
   - 과목 행에 마우스를 올리면 배경색이 바뀌도록 hover 효과 추가
 
 ## Feature Extension
+### Course Registration (Create)
+`handleAdd`에서 입력값을 `trim()`한 뒤 빈 문자열이면 에러 메시지를 띄우고 등록하지 않는다. 입력값이 있으면 기존 id 중 최댓값 + 1을 id로 하는 새 과목 객체를 만들어 `setCourses()`로 목록에 추가하고 입력창을 초기화한다.
+
+### Course Completion (Update)
+`handleToggle`에서 `map`과 spread(`...`)를 이용해 해당 id 과목의 `completed`만 반전시킨 새 배열을 만들어 `setCourses()`로 변경한다. 체크박스로 상태를 바꿀 수 있고, 완료된 과목은 취소선과 함께 `완료`로 표시된다.
+
+### 과목명 검색 (선택 기능)
+`query` state에 검색어를 저장하고, `filter`와 `includes`를 이용해 과목명에 검색어가 포함된 과목만 화면에 보여준다. 검색 결과가 없으면 안내 문구를 표시한다.
 
 ## Deployment
 
