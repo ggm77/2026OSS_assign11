@@ -2,6 +2,7 @@
 
 ## Project Information
 - **프로젝트명**: Course Tracker
+- **원본 Sample Project URL**: https://github.com/2026-2-OSS/week11_sample_project
 - **설명**: 이번 학기 수강 과목을 추가, 조회, 삭제하고 완료 여부를 관리하는 React 앱이다. 과목명 검색 기능도 제공한다.
 - **주요 기능**
   - 과목 조회 및 삭제
@@ -19,6 +20,9 @@ npm run dev
 ```
 
 브라우저에 표시되는 Local URL에 접속하세요. 빌드 테스트: `npm run build`.
+
+### 실행 화면
+![실행 화면](images/run-screen.png)
 
 ## Source Code Exploration
 
@@ -82,13 +86,73 @@ const doneCount = courses.filter(course => course.completed).length;
 
 ## Feature Extension
 ### Course Registration (Create)
+```jsx
+// CourseList.jsx
+function handleAdd(event) {
+  event.preventDefault();
+  const name = newName.trim();
+  if (name === '') {
+    setError('과목명을 입력하세요.');
+    return;
+  }
+  const newCourse = {
+    id: courses.length === 0 ? 1 : Math.max(...courses.map(course => course.id)) + 1,
+    name,
+    category: 'Major',
+    completed: false,
+  };
+  setCourses(previous => [...previous, newCourse]);
+  setNewName('');
+  setError('');
+}
+```
 `handleAdd`에서 입력값을 `trim()`한 뒤 빈 문자열이면 에러 메시지를 띄우고 등록하지 않는다. 입력값이 있으면 기존 id 중 최댓값 + 1을 id로 하는 새 과목 객체를 만들어 `setCourses()`로 목록에 추가하고 입력창을 초기화한다.
 
+![빈 문자열 등록 방지](images/feature-add-empty.png)
+![과목 추가](images/feature-add.png)
+
 ### Course Completion (Update)
+```jsx
+// CourseList.jsx
+function handleToggle(id) {
+  setCourses(previous =>
+    previous.map(course =>
+      course.id === id ? { ...course, completed: !course.completed } : course
+    )
+  );
+}
+
+// CourseItem.jsx
+<div className={`course-title ${course.completed ? "done" : ""}`}>
+  {course.name}
+</div>
+<div className="course-id">
+  Course #{course.id} · {course.completed ? "완료" : "진행 중"}
+</div>
+```
 `handleToggle`에서 `map`과 spread(`...`)를 이용해 해당 id 과목의 `completed`만 반전시킨 새 배열을 만들어 `setCourses()`로 변경한다. 체크박스로 상태를 바꿀 수 있고, 완료된 과목은 취소선과 함께 `완료`로 표시된다.
 
+![완료 상태 변경 (운영체제 체크)](images/feature-toggle.png)
+
 ### 과목명 검색 (선택 기능)
+```jsx
+// CourseList.jsx
+const [query, setQuery] = useState('');
+
+const searchedCourses = courses.filter(course =>
+  course.name.toLowerCase().includes(query.trim().toLowerCase())
+);
+
+<input className="input" value={query} onChange={event => setQuery(event.target.value)} placeholder="과목명 검색" aria-label="과목명 검색" />
+{courses.length > 0 && searchedCourses.length === 0 && <div className="empty">검색 결과가 없습니다.</div>}
+{searchedCourses.map(course => (
+  // 생략
+))}
+```
 `query` state에 검색어를 저장하고, `filter`와 `includes`를 이용해 과목명에 검색어가 포함된 과목만 화면에 보여준다. 검색 결과가 없으면 안내 문구를 표시한다.
+
+![검색](images/feature-search.png)
+![검색 결과 없음](images/feature-search-empty.png)
 
 ## Deployment
 - **GitHub (조직)**: https://github.com/2026-2-OSS/assign11-c01-22300378
@@ -104,3 +168,4 @@ const doneCount = courses.filter(course => course.completed).length;
   - 완료 상태를 바꿀 때 해당 과목의 `completed`만 바꾸는 방법이 어려웠는데, `map`으로 id가 같은 과목만 `{ ...course, completed: !course.completed }`로 새로 만들고 나머지는 그대로 두는 방식으로 해결했다.
 - **AI 활용 내용 및 느낀 점**
   - Claude Code를 사용하여 버그 수정을 했고, CSS 변경할 때 도움을 받았다. 내가 미처 확인하지 못한 부분까지 AI가 잡아줘서 신기했다.
+  - 그외 나머지 개발은 전부 직접 진행하였다.
