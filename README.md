@@ -1,5 +1,10 @@
 # Week 11
 
+## Deployment
+- **GitHub (조직)**: https://github.com/2026-2-OSS/assign11-c01-22300378
+- **GitHub (개인)**: https://github.com/ggm77/2026OSS_assign11
+- **Vercel URL**: https://2026-oss-assign11-mu.vercel.app/
+
 ## Project Information
 - **프로젝트명**: Course Tracker
 - **원본 Sample Project URL**: https://github.com/2026-2-OSS/week11_sample_project
