@@ -66,6 +66,13 @@ const doneCount = courses.filter(course => course.completed).length;
 
 
 ## Customizing
+- **src/data/courses.js**: 초기 과목 데이터를 이번 학기 수강 과목 6개로 변경했다.
+- **src/App.jsx, index.html**: 프로젝트 제목을 `Course Tracker`로 바꾸고, 설명과 상단 문구, 태그, 푸터, 브라우저 탭 제목을 변경했다.
+- **src/App.css**: 다음과 같이 스타일을 변경했다.
+  - 메인 색상을 파란색에서 초록색(`#1f9d55`)으로 변경 (상단 문구, Add 버튼, 태그, 체크박스, 입력창 포커스)
+  - 페이지 배경, 과목 분류 태그 색상을 초록 계열로 변경
+  - 패널의 `border-radius`를 18px에서 22px로 변경
+  - 과목 행에 마우스를 올리면 배경색이 바뀌도록 hover 효과 추가
 
 ## Feature Extension
 
